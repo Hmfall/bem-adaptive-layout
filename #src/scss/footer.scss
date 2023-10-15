@@ -1,0 +1,164 @@
+@use "sass:math";
+.footer {
+   background-color: white;
+   // .footer__contrainer
+   &__contrainer {
+   }
+   // .footer__inner
+   &__inner {
+      display: grid;
+      grid-template-columns: 250px 1fr 290px;
+      @include adaptive-property("column-gap", 80, 0);
+      @include adaptive-property("padding-top", 80, 30);
+      @include adaptive-property("padding-bottom", 60, 30);
+      @media (max-width: $xl) {
+         grid-template-rows: auto auto;
+         grid-template-columns: 1fr 290px;
+      }
+      @media (max-width: $lg) {
+         display: block;
+      }
+   }
+   // .footer__main
+   &__main {
+      @include d-flex(0, f-st, col);
+      @media (max-width: $xl) {
+         grid-column: span 2;
+         @include adaptive-property("margin-bottom", 40, 30);
+      }
+   }
+   // .footer__logo
+   &__logo {
+      margin: 0 0 math.div(16, 24) * 1em 0;
+   }
+   // .footer__text
+   &__text {
+      color: $grayColor;
+      line-height: 150%;
+      &:not(:last-child) {
+         margin: 0 0 1em 0;
+      }
+   }
+   .contacts-footer {
+      @include d-flex(0, f-start, col);
+      &__item {
+         @include d-flex-x(0, cn);
+         color: $grayColor;
+         line-height: 150%;
+         transition: color 0.4s ease;
+         cursor: pointer;
+         &::before {
+            margin: 0 8px 0 0;
+         }
+         &:not(:last-child) {
+            @include adaptive-property("margin-bottom", 16, 10);
+         }
+         @media (any-hover: hover) {
+            &:hover {
+               color: $orangeColor;
+            }
+         }
+      }
+   }
+   // .footer__menu
+   &__menu {
+      @media (min-width: $md) {
+         display: flex;
+      }
+      @media (max-width: $lg) {
+         @include adaptive-property("margin-bottom", 40, 30);
+      }
+   }
+   // .footer__menu-column
+   &__menu-column {
+      @media (min-width: $md) {
+         flex: 0 1 33.333%;
+      }
+      @media (max-width: $md) {
+         &:not(:last-child) {
+            @include adaptive-property("margin-bottom", 30, 15);
+         }
+      }
+   }
+   // .footer__menu-title
+   &__menu-title {
+      cursor: default;
+      @media (min-width: $md) {
+         margin: 0 0 math.div(16, 24) * 1em 0;
+      }
+      ._spoller-init &{
+         width: 100%;
+         @include d-flex(s-b, cn, row-r);
+         @extend ._icon-arrow-down;
+         &::before {
+            @extend %ic;
+            font-size: 12px;
+            transition: transform 0.3s ease 0s;
+         }
+      }
+      &._spoller-active {
+         &::before {
+            transform: rotate(-180deg);
+         }
+      }
+   }
+   // .footer__menu-list
+   &__menu-list {
+      li {
+         &:not(:last-child) {
+            margin: 0 0 15px 0;
+         }
+      }
+      @media (max-width: $md) {
+         padding: 15px 0 0 0;
+      }
+   }
+   // .footer__menu-link
+   &__menu-link {
+      color: $grayColor;
+      font-weight: 500;
+      transition: color 0.4s ease;
+      @media (any-hover: hover) {
+         &:hover {
+            color: $orangeColor;
+         }
+      }
+   }
+   // .footer__subscribe
+   &__subscribe {
+   }
+}
+
+.subscribe {
+   // .subscribe__title
+   &__title {
+      margin: 0 0 math.div(16, 24) * 1em 0;
+   }
+   // .subscribe__form
+   &__form {
+      display: flex;
+   }
+   // .subscribe__button
+   &__button {
+      flex: 0 0 45px;
+      height: 45px;
+      @include d-flex-x(cn, cn);
+      font-size: 18px;
+      background-color: $orangeColor;
+      transition: background-color 0.4s ease;
+      &::before {
+         color: #fff;
+      }
+      @media (any-hover: hover) {
+         &:hover {
+            background-color: #c18363;
+         }
+      }
+   }
+   &__input {
+      width: 100%;
+      background-color: #f4f5f7;
+      padding: 0 12px;
+      margin: 0 5px 0 0;
+   }
+}

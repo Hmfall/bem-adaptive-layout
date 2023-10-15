@@ -1,0 +1,207 @@
+@use "sass:math";
+
+@mixin font($font_name, $file_name, $weight, $style) {
+   @font-face {
+      font-family: $font_name;
+      font-display: swap;
+      src: url("../fonts/#{$file_name}.woff") format("woff"), url("../fonts/#{$file_name}.woff2") format("woff2");
+      font-weight: #{$weight};
+      font-style: #{$style};
+   }
+}
+
+
+// adaptive font size
+@mixin adaptive-font($pcSize, $mobSize) {
+   $addSize: $pcSize - $mobSize;
+   $maxWidth: $maxWidth - 320;
+   font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
+}
+
+
+// px to percent
+@function percent($px, $from) {
+   $result: math.div($px, $from) * 100%;
+   @return $result;
+}
+
+// px to rem
+@function rem($px) {
+   $result: math.div($px, 16) + rem;
+   @return $result;
+}
+
+// px to em
+@function em($px, $current: 16) {
+   $result: math.div($px, $current) + em;
+   @return $result;
+}
+
+
+// adaptive property
+@mixin adaptive-property($property, $startSize, $minSize, $widthFrom: $containerWidth, $widthTo: $minWidth, $keepSize: 0) {
+   @if ($startSize==0) {
+      $startSize: 0.000001;
+   }
+   @if ($minSize==0) {
+      $minSize: 0.000001;
+   }
+
+   // calc();
+   $addSize: math.div($startSize - $minSize, 16);
+
+   @if ($widthFrom == $containerWidth and $maxWidthContainer == 0) {
+      $widthFrom: $maxWidth;
+   }
+
+   // EM break points
+   $widthFromMedia: em($widthFrom);
+   $widthToMedia: em($widthTo);
+
+   // float formula
+   $slope: math.div(($startSize - $minSize), ($widthFrom - $widthTo));
+   $yIntersection: -$widthTo * $slope + $minSize;
+   @if ($yIntersection==0) {
+      $yIntersection: 0.000001;
+   }
+   $flyValue: #{rem($yIntersection)}" + " #{$slope * 100}vw;
+
+   // get property value
+   $propertyValue: #{"clamp(" rem($minSize) "," $flyValue "," rem($startSize) ")"};
+   // if negative values
+   @if ($minSize > $startSize) {
+      $propertyValue: #{"clamp(" rem($startSize) "," $flyValue "," rem($minSize) ")"};
+   }
+
+   // clamp is supported
+   @supports (#{$property}: $propertyValue) {
+      #{$property}: $propertyValue;
+   }
+   // clamp is not supported
+   @supports not (#{$property}: $propertyValue) {
+      #{$property}: calc(#{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)});
+   }
+
+   // setting default values
+   @if $widthFrom != $containerWidth and $widthFrom != $maxWidth and $keepSize != 1 and $keepSize != 2 {
+      @media (min-width: $widthFromMedia) {
+         #{$property}: inherit;
+      }
+   }
+   @if $widthTo != $minWidth and $keepSize != 1 and $keepSize != 3 {
+      @media (max-width: $widthToMedia) {
+         #{$property}: inherit;
+      }
+   }
+}
+
+@mixin d-flex-x($justify-content: 0, $align-items: 0, $flex-direction: 0, $flex-wrap: 0) {
+   #{"display"}: flex;
+
+   $justify-content-props: (
+      "st": "start",
+      "cn": "center",
+      "s-b": "space-between",
+      "s-a": "space-around",
+      "s-e": "space-evenly"
+   );
+
+   @each $prop, $value in $justify-content-props {
+      @if $justify-content == $prop {
+         #{"justify-content"}: #{$value};
+      }
+   }
+
+   $align-items-props: (
+      "st": "start",
+      "cn": "center",
+      "end": "end",
+      "stc": "stretch",
+      "f-st": "flex-start",
+      "f-end": "flex-end"
+   );
+   @each $prop, $value in $align-items-props {
+      @if $align-items == $prop {
+         #{"align-items"}: #{$value};
+      }
+   }
+
+   @if $flex-direction == col {
+      #{"flex-direction"}: column;
+   } @else if $flex-direction == col-r {
+      #{"flex-direction"}: column-reverse;
+   }
+   @if $flex-direction == row-r {
+      #{"flex-direction"}: row-reverse;
+   }
+
+   @if $flex-wrap == wr {
+      #{"flex-wrap"}: wrap;
+   } @else if $flex-wrap == wr-r {
+      #{"flex-wrap"}: wrap-reverse;
+   }
+}
+
+@mixin d-flex($justify-content: 0, $align-items: 0, $flex-direction: 0, $flex-wrap: 0) {
+   #{"display"}: flex;
+
+   $justify-content-props: (
+      "start": "start",
+      "center": "center",
+      "between": "space-between",
+      "around": "space-around",
+      "evently": "space-evenly"
+   );
+
+   @each $prop, $value in $justify-content-props {
+      @if $justify-content == $prop {
+         #{"justify-content"}: #{$value};
+      }
+   }
+
+   $align-items-props: (
+      "start": "start",
+      "center": "center",
+      "end": "end",
+      "stc": "stretch",
+      "f-start": "flex-start",
+      "f-end": "flex-end"
+   );
+   @each $prop, $value in $align-items-props {
+      @if $align-items == $prop {
+         #{"align-items"}: #{$value};
+      }
+   }
+
+   @if $flex-direction == col {
+      #{"flex-direction"}: column;
+   } @else if $flex-direction == col-r {
+      #{"flex-direction"}: column-reverse;
+   }
+   @if $flex-direction == row-r {
+      #{"flex-direction"}: row-reverse;
+   }
+
+   @if $flex-wrap == wrap {
+      #{"flex-wrap"}: wrap;
+   } @else if $flex-wrap == wrap-r {
+      #{"flex-wrap"}: wrap-reverse;
+   }
+}
+
+/*[class*="_ibg"] {
+   position: relative;
+   img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+   }
+}
+[class*="-ibg_contain"] {
+   img {
+      object-fit: contain;
+   }
+}*/

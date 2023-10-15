@@ -1,0 +1,300 @@
+@use "sass:math";
+.header {
+   position: relative;
+   width: 100%;
+   top: 0;
+   left: 0;
+   background-color: #f9f1e6;
+   // .header__container
+/*    &__container {
+   } */
+   // .header__inner
+   &__inner {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      min-height: 125px;
+      position: relative;
+      @media (max-width: $md) {
+         min-height: 80px;
+      }
+      @media (max-width: $sm) {
+         min-height: 50px;
+      }
+   }
+   // .header__main
+   &__main {
+      display: flex;
+      align-items: center;
+      flex: 0 0 math.div(494,1240) * 100%;
+      @media (max-width: $md) {
+         flex: 1 1 auto;
+      }
+   }
+   // .header__logo
+   &__logo {
+      position: relative;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 29px;
+      z-index: 5;
+      /*line-height: 29 / 24 * 100%;*/
+      color: #000000;
+   }
+   // .header__menu
+   &__menu {
+      flex: 0 1 420px;
+   }
+   // .header__menu-inner
+   &__menu-inner {
+      @media (max-width: $sm) {
+         display: none;
+         position: fixed;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         top: 0;
+         left: 0;
+         background-color: #fcf8f3;
+         transition: left 0.3s ease;
+         padding: 70px 15px 30px 15px;
+      }
+   }
+   // .header__menu-list
+   &__menu-list {
+      @media (min-width: $sm) {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: space-evenly;
+      }
+   }
+   // .header__menu-item
+   &__menu-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 0 3px;
+      padding: 5px 0;
+      @media (any-hover: hover) {
+         &:hover {
+            .header__menu-sublist {
+               opacity: 1;
+               visibility: visible;
+               transform: translate(0, 0);
+               pointer-events: auto;
+            }
+            .header__menu-arrow {
+               transform: rotate(-180deg);
+            }
+            .header__menu-arrow,
+            .header__menu-link {
+               color: $orangeColor;
+            }
+         }
+      }
+      @media (min-width: $sm) {
+         &._hover {
+            .header__menu-sublist {
+               opacity: 1;
+               visibility: visible;
+               transform: translate(0, 0);
+               pointer-events: auto;
+            }
+            .header__menu-arrow {
+               transform: rotate(-180deg);
+            }
+            .header__menu-arrow,
+            .header__menu-link {
+               color: $orangeColor;
+            }
+         }
+      }
+   }
+
+   // .header__menu-arrow
+   &__menu-arrow {
+      margin: 0 0 0 8px;
+      background: none;
+      font-size: 9px;
+      transition: all 0.3s ease;
+      @media (max-width: $sm) {
+         font-size: 14px;
+      }
+   }
+   // .header__menu-link
+   &__menu-link {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      color: inherit;
+      transition: color 0.3s ease;
+      @media (max-width: $sm) {
+         font-size: 24px;
+         font-weight: 600;
+      }
+   }
+   // .header__menu-sublist
+   &__menu-sublist {
+      position: relative;
+      background-color: $orangeColor;
+      padding: 15px;
+      flex: 1 1 100%;
+      transition: all 0.3s ease;
+      @media (min-width: $sm) {
+         opacity: 0;
+         vibibility: hidden;
+         transform: translate(0, 10px);
+         min-width: 200px;
+         left: 0;
+         pointer-events: none;
+         position: absolute;
+         top: 100%;
+         z-index: 5;
+      }
+   }
+   // .header__menu-subitem
+   &__menu-subitem {
+      &:not(:last-child) {
+         margin: 0 0 5px 0;
+      }
+   }
+   // .header__menu-sublink
+   &__menu-sublink {
+      color: #fff;
+      line-height: 120%;
+      transition: all 0.4s ease;
+      &:hover {
+         text-decoration: underline;
+      }
+   }
+
+   // .header__search
+   &__search {
+      margin: 0 32px 0 0;
+      @media (min-width: $md) {
+         flex: 1 1 auto;
+      }
+   }
+   .search-form {
+      max-width: 473px;
+      &._active {
+         .search-form__inner {
+            opacity: 1;
+            top: 100%;
+            visibility: visible;
+         }
+         .search-form__icon {
+            color: $orangeColor;
+
+         }
+      }
+      // .search-form__icon
+      &__icon {
+         position: relative;
+         z-index: 5;
+         font-size: 22px;
+         color: #262f56;
+         background: none;
+         @media (min-width: $md) {
+            display: none;
+         }
+      }
+      // .search-form__inner
+      &__inner {
+         background-color: #fff;
+         display: flex;
+         align-items: center;
+         @media (max-width: $md) {
+            box-shadow: 0 0 5px rgba(212, 209, 205, 0.3);
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: -100%;
+            z-index: 5;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+         }
+      }
+      // .search-form__btn
+      &__btn {
+         flex: 0 0 45px;
+         height: 45px;
+         font-size: 15px;
+         color: #333333;
+         background: none;
+      }
+      // .search-form__input
+      &__input {
+         width: 100%;
+         padding: 0 20px 0 0;
+         font-size: 14px;
+         color: $darkColor;
+      }
+   }
+
+
+   // .header__actions
+   &__actions {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto;
+      grid-auto-flow: column;
+      align-items: center;
+      gap: 32px;
+      @media (max-width: $sm) {
+         gap: 22px;
+      }
+   }
+   // .header__actions-favorites
+/*    &__actions-favorites {
+   } */
+   // .header__actions-item
+   &__actions-item {
+      color: #262f56;
+      font-size: 24px;
+      transition: color 0.3s ease;
+      @media (any-hover: hover) {
+         &:hover {
+            color: $orangeColor;
+         }
+      }
+   }
+   // .header__actions-cart
+   &__actions-cart {
+      position: relative;
+      span {
+         position: absolute;
+         width: 16px;
+         height: 16px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         top: -8px;
+         right: -8px;
+         font-size: 12px;
+         border-radius: 50%;
+         opacity: 0.95;
+         background-color: $orangeColor;
+      }
+   }
+   // .header__actions-user
+   &__actions-user {
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+         width: 35px;
+         height: 35px;
+      }
+   }
+}
+
+/*
+flex: 0 0 494px;
+Это CSS свойство flex в значении 0 0 494px задает гибкую ширину элемента в гибком контейнере (flexbox).
+Значение 0 означает, что элемент не может увеличиваться более своей базовой ширины.
+Значение 0 означает, что элемент не может уменьшаться меньше своей базовой ширины.
+Значение 494px задает базовую ширину элемента.
+*/

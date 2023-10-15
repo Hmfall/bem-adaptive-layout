@@ -1,0 +1,70 @@
+@use "sass:math";
+@import "mixins";
+@import "testMixin";
+
+@import "fonts";
+$fontFamily: "Gilroy";
+@import "icons";
+
+$minWidth: 320;
+$maxWidth: 1920;
+
+$maxWidthContainer: 1240;
+$containerPadding: 30;
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+$xl: $containerWidth + px;
+$lg: 991.98px;
+$md: 767.98px;
+$sm: 479.98px;
+
+$lg_: 991.98;
+$md_: 767.98;
+$sm_: 479.98;
+
+$mainColor: #3a3a3a;
+$orangeColor: #e89f71;
+$grayColor: #898989;
+$darkColor: #616161;
+
+@import "null";
+body {
+	color: #000;
+	font-size: 16px;
+}
+
+.wrapper {
+	width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+._container {
+	max-width: $containerWidth + px;
+	margin: 0 auto;
+	padding: 0 math.div($containerPadding, 2) + px;
+	 /*@media (max-width: $lg) {
+	 	max-width: 960px;
+	 }
+	 @media (max-width: $md) {
+	 	max-width: 720px;
+	 }
+	 @media (max-width: $sm) {
+	 	max-width: none;
+	 	padding: 0 15px;
+	 }*/
+}
+
+@import "ui";
+@import "forms";
+
+@import "ui";
+@import "header";
+@import "footer";
+@import "home";
+
+.page {
+	flex: 1 1 auto;
+}
